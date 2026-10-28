@@ -8,24 +8,132 @@
 html { scroll-behavior: smooth; }
 body { background: var(--ice); -webkit-tap-highlight-color: transparent; }
 
+/* Branded page scrollbar: ink track, volt-green thumb.
+   Chrome/Edge/Safari use the ::-webkit-scrollbar rules; Firefox only understands
+   scrollbar-color, so it gets that (setting it in Chrome would disable the rules below). */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4ef07a, var(--volt) 40%, #12a83c);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #7dff9e, #3be56a); }
+::-webkit-scrollbar-thumb:active { background: #b9ffcb; }
+::-webkit-scrollbar-corner { background: var(--ink); }
+@supports (-moz-appearance: none) {
+  html { scrollbar-color: var(--volt) var(--ink); scrollbar-width: thin; }
+}
+
 /* Hide scrollbars on swipe tracks */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
-/* Hero carousel: slides stack in one grid cell so height = tallest slide */
+/* ---------- Hero carousel ----------
+   Slides stack in one grid cell (height = tallest slide). The incoming slide
+   wipes in diagonally over the outgoing one, which stays put underneath until
+   it's covered. Everything below is switched off by the reduced-motion rule. */
 .hero-slide {
   grid-area: 1 / 1;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .8s ease, visibility .8s;
+  z-index: 0;
+  transition: opacity .2s linear .95s, visibility 0s linear 1.15s;
 }
-.hero-slide.is-active { opacity: 1; visibility: visible; }
-.hero-slide .kenburns { transform: scale(1.06); transition: transform 7s ease-out; }
+.hero-slide.is-active { opacity: 1; visibility: visible; z-index: 1; transition: none; }
+/* .ready is added on the first slide change, so the first slide doesn't wipe in on page load */
+[data-hero].ready .hero-slide.is-active { animation: hero-wipe 1s cubic-bezier(.77,0,.18,1) both; }
+@keyframes hero-wipe {
+  from { clip-path: polygon(118% 0, 118% 0, 100% 100%, 100% 100%); }
+  to   { clip-path: polygon(-30% 0, 118% 0, 100% 100%, -48% 100%); }
+}
+/* Green streak riding the wipe edge */
+[data-hero].ready .hero-slide.is-active::after {
+  content: ''; position: absolute; top: -5%; bottom: -5%; width: 10px; z-index: 5; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--volt) 30%, #b9ffcb 50%, var(--volt) 70%, transparent);
+  box-shadow: 0 0 30px 6px rgba(36,214,83,.55);
+  transform: skewX(-9deg);
+  animation: hero-streak 1s cubic-bezier(.77,0,.18,1) both;
+}
+@keyframes hero-streak {
+  from { left: 108%; opacity: 1; }
+  85%  { opacity: 1; }
+  to   { left: -40%; opacity: 0; }
+}
+
+.hero-slide .kenburns { transform: scale(1.08); transition: transform 8s ease-out; }
 .hero-slide.is-active .kenburns { transform: scale(1); }
-.hero-slide .slide-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease .25s, transform .7s ease .25s; }
-.hero-slide.is-active .slide-in { opacity: 1; transform: none; }
-.hero-slide.is-active .slide-in.d2 { transition-delay: .4s; }
-.hero-slide.is-active .slide-in.d3 { transition-delay: .55s; }
+
+/* Fade-up pieces: animate in when active; reset only after the slide is covered */
+.hero-slide .slide-in { opacity: 0; transform: translateY(24px); transition: opacity 0s 1s, transform 0s 1s; }
+.hero-slide.is-active .slide-in { opacity: 1; transform: none; transition: opacity .7s ease .3s, transform .7s cubic-bezier(.2,.8,.2,1) .3s; }
+.hero-slide.is-active .slide-in.d2 { transition-delay: .75s; }
+.hero-slide.is-active .slide-in.d3 { transition-delay: .9s; }
+
+/* Headlines rise into place line by line (--i = line index) */
+.hero-line { display: block; }
+.hero-line > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.45em) skewY(4deg);
+  clip-path: inset(-30% -30% 100% -30%);
+  transition: opacity 0s 1s, transform 0s 1s, clip-path 0s 1s;
+}
+.hero-slide.is-active .hero-line > span {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(-30% -30% -30% -30%);
+  transition: opacity .35s ease, transform .9s cubic-bezier(.2,.85,.2,1), clip-path .9s cubic-bezier(.2,.85,.2,1);
+  transition-delay: calc(.3s + var(--i, 0) * .12s);
+}
+
+/* "WIN BIG" breathes a green glow */
+.win-glow { animation: win-glow 2.8s ease-in-out 1.4s infinite; }
+@keyframes win-glow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(36,214,83,0)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(36,214,83,.6)); }
+}
+
+/* Floodlight sweeping across the athletes photo */
+.light-sweep {
+  background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.16) 46%, rgba(255,255,255,.05) 50%, transparent 58%);
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  animation: light-sweep 7s ease-in-out 1.2s infinite;
+}
+@keyframes light-sweep {
+  0%        { background-position: 130% 0; }
+  45%, 100% { background-position: -40% 0; }
+}
+
+/* Collection slides: jersey floats, speed lines stream past */
+.hero-float { animation: hero-float 4.5s ease-in-out infinite alternate; }
+@keyframes hero-float {
+  from { transform: translateY(6px) rotate(-1.2deg); }
+  to   { transform: translateY(-14px) rotate(1deg); }
+}
+.speed-lines {
+  background-image:
+    linear-gradient(135deg, transparent 49.2%, var(--streak) 49.5%, var(--streak) 50.5%, transparent 50.8%),
+    linear-gradient(135deg, transparent 49.6%, var(--streak) 49.8%, var(--streak) 50.2%, transparent 50.4%);
+  background-size: 260px 260px, 150px 150px;
+  -webkit-mask-image: linear-gradient(to right, transparent 25%, #000 65%);
+          mask-image: linear-gradient(to right, transparent 25%, #000 65%);
+  animation: speed-lines 1.8s linear infinite;
+}
+@keyframes speed-lines {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: -260px 0, -300px 0; }
+}
+.hero-slide:not(.is-active) :is(.light-sweep, .speed-lines, .hero-float, .win-glow) { animation-play-state: paused; }
+
+/* Mouse parallax: --px/--py (-1…1) come from app.js, --d is each layer's depth in px */
+.parallax {
+  transform: translate3d(calc(var(--px, 0) * var(--d, 0) * -1px), calc(var(--py, 0) * var(--d, 0) * -1px), 0) scale(var(--ps, 1));
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+picture.parallax, .parallax:has(> img.kenburns) { --ps: 1.04; }
 
 /* Hero progress bar: fills over one slide's duration (--hero-ms, set in app.js) */
 .hero-progress { width: 0; }

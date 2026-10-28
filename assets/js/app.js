@@ -7,6 +7,8 @@
   const waLink = text => `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(text)}`;
   const sportLabel = key => (sports.find(s => s.key === key) || {}).label || key;
   const byId = id => products.find(p => p.id === id);
+  // Each product has a pre-built page (product-<id>.html, made by scripts/build-seo.mjs)
+  const productUrl = (id, colour) => `product-${id}.html${colour ? `?colour=${colour}` : ''}`;
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   /* ---------- Icons ---------- */
@@ -308,7 +310,7 @@
     </div>
     <div class="flex flex-1 flex-col p-3 sm:p-4">
       <p class="truncate text-[10px] font-semibold uppercase tracking-wider text-slate-400 sm:text-[11px]">${sportLabel(p.sport)}<span class="hidden sm:inline"> · ${p.fabric}</span></p>
-      <h3 class="mt-1 text-sm font-semibold leading-snug text-ink sm:text-base"><a href="product.html?id=${p.id}&colour=${p.colours[0].key}" class="line-clamp-2 hover:text-emerald-700" data-card-link>${esc(p.name)}</a></h3>
+      <h3 class="mt-1 text-sm font-semibold leading-snug text-ink sm:text-base"><a href="${productUrl(p.id, p.colours[0].key)}" class="line-clamp-2 hover:text-emerald-700" data-card-link>${esc(p.name)}</a></h3>
       <div class="mt-1.5 flex flex-wrap items-baseline gap-x-2 sm:mt-2">
         <span class="text-lg font-extrabold text-ink sm:text-xl">${inr(p.price)}</span>
         <span class="text-xs text-slate-400 line-through sm:text-sm">${inr(p.mrp)}</span>
@@ -387,7 +389,7 @@
           <li class="flex gap-2">${I.check('h-5 w-5 text-volt')} Add names, numbers & team logos on request</li>
           <li class="flex gap-2">${I.check('h-5 w-5 text-volt')} Pan-India delivery</li>
         </ul>
-        <a href="product.html?id=${p.id}&colour=${c.key}" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ink underline-offset-4 hover:underline">View full details ${I.arrow('h-4 w-4')}</a>
+        <a href="${productUrl(p.id, c.key)}" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ink underline-offset-4 hover:underline">View full details ${I.arrow('h-4 w-4')}</a>
       </div>
     </div>`;
   };
@@ -512,7 +514,7 @@
       const card = t.closest('[data-card]');
       card.dataset.colour = t.dataset.swatch;
       $('[data-card-img]', card).src = t.dataset.img;
-      $('[data-card-link]', card).href = `product.html?id=${card.dataset.card}&colour=${t.dataset.swatch}`;
+      $('[data-card-link]', card).href = productUrl(card.dataset.card, t.dataset.swatch);
       $$('[data-swatch]', card).forEach(s => {
         const on = s === t;
         s.classList.toggle('ring-ink', on);
@@ -540,8 +542,11 @@
     // Hover pauses it; reduced-motion users get no autoplay at all.
     const bar = $('[data-hero-progress]', root);
     root.style.setProperty('--hero-ms', '6500ms');
-    let i = 0;
+    let i = 0, started = false;
     const go = n => {
+      // From the first change on, incoming slides wipe in (the first slide just appears)
+      if (started) root.classList.add('ready');
+      started = true;
       i = (n + slides.length) % slides.length;
       slides.forEach((s, k) => { s.classList.toggle('is-active', k === i); s.setAttribute('aria-hidden', k !== i); s.inert = k !== i; });
       dotEls.forEach((d, k) => d.classList.toggle('is-active', k === i));
@@ -563,6 +568,24 @@
       x0 = null;
     });
     go(0);
+
+    // Mouse parallax: layers drift against the cursor by their data-depth (px)
+    if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) {
+      $$('.parallax', root).forEach(el => el.style.setProperty('--d', el.dataset.depth || 12));
+      let frame;
+      root.addEventListener('pointermove', e => {
+        if (e.pointerType !== 'mouse') return;
+        const r = root.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 2 - 1;
+        const y = ((e.clientY - r.top) / r.height) * 2 - 1;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          root.style.setProperty('--px', x.toFixed(3));
+          root.style.setProperty('--py', y.toFixed(3));
+        });
+      });
+      root.addEventListener('pointerleave', () => { root.style.setProperty('--px', 0); root.style.setProperty('--py', 0); });
+    }
   };
 
   /* ---------- Scroll-snap track carousel ---------- */
@@ -624,6 +647,7 @@
   VK.waLink = waLink;
   VK.sportLabel = sportLabel;
   VK.esc = esc;
+  VK.productUrl = productUrl;
   VK.stars = stars;
   VK.orderText = orderText;
   VK.bag = bag;

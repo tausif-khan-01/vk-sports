@@ -1,11 +1,14 @@
-/* VK Sports — product detail page (product.html?id=…&colour=…) */
+/* VK Sports — product detail page.
+   Pre-built pages (product-<id>.html) carry the id in <body data-product-id>;
+   product.html?id=…&colour=… still works as a fallback. */
 (() => {
   const { products, colours, sizes, sizeChart, fabricInfo, care, icons: I, inr, esc } = VK;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
   const params = new URLSearchParams(location.search);
-  const p = products.find(x => x.id === params.get('id'));
+  const fixedId = document.body.dataset.productId;
+  const p = products.find(x => x.id === (fixedId || params.get('id')));
   const root = $('[data-product]');
 
   if (!p) {
@@ -166,7 +169,7 @@
     if (!t) return;
     if (t.dataset.colour) {
       state.colour = t.dataset.colour;
-      history.replaceState(null, '', `?id=${p.id}&colour=${state.colour}`);
+      history.replaceState(null, '', fixedId ? `?colour=${state.colour}` : `?id=${p.id}&colour=${state.colour}`);
       render();
     } else if (t.dataset.size) { state.size = t.dataset.size; render(); }
     else if (t.dataset.qty) { state.qty = Math.max(1, Math.min(99, state.qty + +t.dataset.qty)); render(); }
