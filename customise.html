@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jersey Designer — Design Your Custom Team Jersey | VK Sports</title>
+  <meta name="description" content="Design your own team jersey live: pick a pattern and colours, add a name, number and team logo, then send the design to VK Sports on WhatsApp.">
+  <meta name="theme-color" content="#07111B">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VK Sports">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:title" content="Design your team jersey — VK Sports">
+  <meta property="og:description" content="Pick colours, add names & numbers and see your jersey live.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tw-config.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="font-sans text-ink antialiased" data-page="customise">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="bg-ink text-white">
+      <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:py-10">
+        <nav class="text-sm text-slate-400" aria-label="Breadcrumb"><a href="index.html" class="hover:text-volt">Home</a> <span class="mx-1">/</span> <span class="text-white">Jersey Designer</span></nav>
+        <h1 class="mt-2 font-display text-4xl font-black uppercase italic tracking-tight md:text-6xl">Design Your <span class="text-volt">Jersey</span></h1>
+        <p class="mt-1 max-w-xl text-slate-300">Pick a style and colours, add your name and number, and see it live. When you're happy, send it to us on WhatsApp.</p>
+      </div>
+    </section>
+
+    <div class="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 md:py-10 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
+      <!-- Preview -->
+      <div class="lg:sticky lg:top-32 lg:self-start">
+        <div class="relative overflow-hidden rounded-3xl bg-[radial-gradient(ellipse_at_50%_35%,#1b2a3d_0%,#07111B_70%)] p-3 shadow-xl sm:p-6">
+          <div class="absolute inset-0 opacity-[.06] [background-image:repeating-linear-gradient(135deg,#fff_0_2px,transparent_2px_22px)]"></div>
+          <div class="relative flex items-center justify-between px-1 text-[11px] font-bold uppercase tracking-[.25em] text-slate-400">
+            <span>Front</span><span class="text-volt" data-preview-label>Live preview</span><span>Back</span>
+          </div>
+          <div class="relative mt-2" data-preview></div>
+          <div class="absolute bottom-3 left-1/2 h-4 w-3/4 -translate-x-1/2 rounded-[50%] bg-black/50 blur-xl"></div>
+        </div>
+        <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <button class="flex items-center justify-center gap-2 rounded-xl border-2 border-ink bg-white py-3 text-sm font-bold transition hover:bg-ink hover:text-white" data-download>
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Download
+          </button>
+          <button class="flex items-center justify-center gap-2 rounded-xl border-2 border-slate-200 bg-white py-3 text-sm font-bold transition hover:border-ink" data-copy-link>
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg> Copy link
+          </button>
+          <button class="col-span-2 flex items-center justify-center gap-2 rounded-xl border-2 border-slate-200 bg-white py-3 text-sm font-bold transition hover:border-ink sm:col-span-1" data-surprise>
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18h1.4a4 4 0 0 0 3.3-1.7l6.6-9.6A4 4 0 0 1 16.6 5H22M18 2l4 3-4 3M2 6h1.9a4 4 0 0 1 3.4 1.9M22 19h-5.4a4 4 0 0 1-3.3-1.7l-.6-.9M18 16l4 3-4 3"/></svg> Surprise me
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <form class="space-y-4" data-designer autocomplete="off" onsubmit="return false">
+        <section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5">
+          <h2 class="flex items-center gap-3 font-display text-2xl font-extrabold uppercase italic"><span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-sm not-italic text-volt">1</span>Start from a preset</h2>
+          <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4" data-presets></div>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5">
+          <h2 class="flex items-center gap-3 font-display text-2xl font-extrabold uppercase italic"><span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-sm not-italic text-volt">2</span>Pattern &amp; collar</h2>
+          <div class="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6" data-patterns role="radiogroup" aria-label="Pattern"></div>
+          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+            <div class="flex items-center gap-2" role="radiogroup" aria-label="Collar">
+              <span class="font-semibold">Collar</span>
+              <label class="cursor-pointer"><input type="radio" name="collar" value="v" class="peer sr-only"><span class="rounded-full border border-slate-200 px-3 py-1.5 peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-volt">V-neck</span></label>
+              <label class="cursor-pointer"><input type="radio" name="collar" value="round" class="peer sr-only"><span class="rounded-full border border-slate-200 px-3 py-1.5 peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-volt">Round</span></label>
+            </div>
+            <label class="flex cursor-pointer items-center gap-2"><input type="checkbox" name="sleeves" class="h-4 w-4 accent-[#24D653]"> <span class="font-semibold">Contrast sleeves</span></label>
+          </div>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5">
+          <h2 class="flex items-center gap-3 font-display text-2xl font-extrabold uppercase italic"><span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-sm not-italic text-volt">3</span>Colours</h2>
+          <div class="mt-3 space-y-4" data-colour-rows></div>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5">
+          <h2 class="flex items-center gap-3 font-display text-2xl font-extrabold uppercase italic"><span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-sm not-italic text-volt">4</span>Name &amp; number</h2>
+          <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_120px]">
+            <label class="text-sm font-medium">Name on back
+              <input name="name" maxlength="14" class="mt-1 h-11 w-full rounded-xl border border-slate-200 px-4 font-semibold uppercase tracking-wide focus:border-volt focus:outline-none focus:ring-2 focus:ring-volt/30" placeholder="YOUR NAME">
+            </label>
+            <label class="text-sm font-medium">Number
+              <input name="number" inputmode="numeric" maxlength="2" class="mt-1 h-11 w-full rounded-xl border border-slate-200 px-4 text-center font-bold focus:border-volt focus:outline-none focus:ring-2 focus:ring-volt/30" placeholder="10">
+            </label>
+          </div>
+          <div class="mt-4 flex flex-wrap items-center gap-2 text-sm" role="radiogroup" aria-label="Lettering style">
+            <span class="mr-1 font-semibold">Lettering</span>
+            <label class="cursor-pointer"><input type="radio" name="font" value="block" class="peer sr-only"><span class="inline-block rounded-full border border-slate-200 px-3 py-1.5 font-display font-extrabold uppercase peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-volt">Block</span></label>
+            <label class="cursor-pointer"><input type="radio" name="font" value="italic" class="peer sr-only"><span class="inline-block rounded-full border border-slate-200 px-3 py-1.5 font-display font-extrabold uppercase italic peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-volt">Speed</span></label>
+            <label class="cursor-pointer"><input type="radio" name="font" value="varsity" class="peer sr-only"><span class="inline-block rounded-full border border-slate-200 px-3 py-1.5 font-bold uppercase [font-family:Georgia,serif] peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-volt">Varsity</span></label>
+            <label class="ml-auto flex cursor-pointer items-center gap-2"><input type="checkbox" name="frontNumber" class="h-4 w-4 accent-[#24D653]"> <span class="font-semibold">Number on front</span></label>
+          </div>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5">
+          <h2 class="flex items-center gap-3 font-display text-2xl font-extrabold uppercase italic"><span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-sm not-italic text-volt">5</span>Team logo <span class="text-base font-semibold normal-case not-italic text-slate-400">(optional)</span></h2>
+          <div class="mt-3 flex flex-wrap items-center gap-3">
+            <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-4 py-3 text-sm font-semibold transition hover:border-ink">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>
+              <span data-logo-label>Upload logo</span>
+              <input type="file" name="logo" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="sr-only">
+            </label>
+            <button type="button" class="hidden text-sm font-semibold text-slate-500 underline hover:text-red-600" data-logo-remove>Remove</button>
+          </div>
+          <p class="mt-2 text-xs text-slate-500">Your logo is only shown on this page, on your device. Please attach the original file in WhatsApp too so we can print it sharp.</p>
+        </section>
+
+        <section class="rounded-2xl bg-ink p-5 text-white shadow-xl">
+          <h2 class="flex items-center gap-3 font-display text-2xl font-extrabold uppercase italic"><span class="grid h-8 w-8 place-items-center rounded-full bg-volt text-sm not-italic text-ink">6</span>Send your design</h2>
+          <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_140px]">
+            <label class="text-sm font-medium text-slate-300">Team / your name <span class="text-slate-500">(optional)</span>
+              <input name="team" maxlength="40" class="mt-1 h-11 w-full rounded-xl border-0 bg-white/10 px-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-volt" placeholder="e.g. Parbhani Strikers">
+            </label>
+            <label class="text-sm font-medium text-slate-300">Quantity
+              <input name="qty" type="number" min="1" max="999" class="mt-1 h-11 w-full rounded-xl border-0 bg-white/10 px-4 text-white focus:outline-none focus:ring-2 focus:ring-volt" placeholder="15">
+            </label>
+          </div>
+          <a class="mt-4 flex items-center justify-center gap-2 rounded-xl bg-[#25D366] py-4 font-bold text-white transition hover:brightness-105" data-send target="_blank" rel="noopener"><span data-icon="whatsapp"></span> Send Design on WhatsApp</a>
+          <p class="mt-2 text-center text-xs text-slate-400">Your message includes a link that opens this exact design. Tap <b>Download</b> first if you'd like to attach the picture too.</p>
+        </section>
+      </form>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/customise.js"></script>
+</body>
+</html>

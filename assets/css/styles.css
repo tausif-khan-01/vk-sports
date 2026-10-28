@@ -1,0 +1,135 @@
+/* VK Sports — styles Tailwind utilities don't cover */
+:root {
+  --ink: #07111B;
+  --volt: #24D653;
+  --ice: #F5F7FA;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--ice); -webkit-tap-highlight-color: transparent; }
+
+/* Hide scrollbars on swipe tracks */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Hero carousel: slides stack in one grid cell so height = tallest slide */
+.hero-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .8s ease, visibility .8s;
+}
+.hero-slide.is-active { opacity: 1; visibility: visible; }
+.hero-slide .kenburns { transform: scale(1.06); transition: transform 7s ease-out; }
+.hero-slide.is-active .kenburns { transform: scale(1); }
+.hero-slide .slide-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease .25s, transform .7s ease .25s; }
+.hero-slide.is-active .slide-in { opacity: 1; transform: none; }
+.hero-slide.is-active .slide-in.d2 { transition-delay: .4s; }
+.hero-slide.is-active .slide-in.d3 { transition-delay: .55s; }
+
+/* Hero progress bar: fills over one slide's duration (--hero-ms, set in app.js) */
+.hero-progress { width: 0; }
+.hero-progress.run { animation: hero-progress var(--hero-ms, 6000ms) linear forwards; }
+.hero-progress.paused { animation-play-state: paused; }
+@keyframes hero-progress { from { width: 0; } to { width: 100%; } }
+
+.hero-dot { width: 10px; height: 10px; border-radius: 999px; background: rgba(255,255,255,.4); transition: all .3s; }
+.hero-dot.is-active { width: 28px; background: var(--volt); }
+
+/* Diagonal athletic slash used behind headings */
+.slash { position: relative; display: inline-block; padding-left: 52px; }
+.slash::before {
+  content: ''; position: absolute; left: 0; top: 50%;
+  width: 40px; height: 3px; background: var(--volt); transform: translateY(-50%);
+}
+
+/* Marquee */
+.marquee { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-slow { animation-duration: 45s; animation-direction: reverse; }
+
+/* Scroll reveal (only hides content once JS is running) */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* Floating WhatsApp pulse */
+.wa-pulse::before {
+  content: ''; position: absolute; inset: 0; border-radius: 999px;
+  background: #25D366; z-index: -1; animation: pulse 2.2s ease-out infinite;
+}
+@keyframes pulse { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(1.7); opacity: 0; } }
+
+@keyframes shake { 0%,100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.shake { animation: shake .3s ease 2; }
+
+/* Product cards: photos show front + back side by side.
+   On hover, zoom into the right half so the back (name & number) fills the frame. */
+.card-img { transition: transform .6s cubic-bezier(.2,.7,.2,1); transform-origin: 82% 30%; }
+.quick-add { display: none; }
+@media (hover: hover) {
+  .group:hover .card-img { transform: scale(1.7); }
+  .quick-add {
+    display: block; opacity: 0; transform: translateY(12px);
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .group:hover .quick-add, .quick-add:focus-within { opacity: 1; transform: none; }
+}
+
+/* Item flying into the bag */
+.fly-item { position: fixed; z-index: 70; pointer-events: none; border-radius: 12px; object-fit: contain; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+@keyframes bag-bump { 0%,100% { transform: scale(1); } 40% { transform: scale(1.35); } }
+.bag-bump { animation: bag-bump .45s ease; }
+
+/* Category tile sheen on hover */
+.tile-sheen::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%);
+  transform: translateX(-100%); transition: transform .7s ease;
+}
+.group:hover .tile-sheen::after { transform: translateX(100%); }
+
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-icon { transform: rotate(45deg); }
+
+input[type=range] { accent-color: var(--volt); }
+
+/* Long-form text on policy / about pages */
+.prose-vk { color: #334155; line-height: 1.75; }
+.prose-vk > * + * { margin-top: 1rem; }
+.prose-vk h2 {
+  margin-top: 2.5rem; color: var(--ink); font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.875rem; font-weight: 800; font-style: italic; text-transform: uppercase; line-height: 1.1;
+  scroll-margin-top: 8rem;
+}
+.prose-vk h2:first-child { margin-top: 0; }
+.prose-vk h3 { margin-top: 1.75rem; color: var(--ink); font-weight: 700; font-size: 1.125rem; }
+.prose-vk ul { list-style: none; padding: 0; }
+.prose-vk ul > li { position: relative; padding-left: 1.5rem; }
+.prose-vk ul > li + li { margin-top: .5rem; }
+.prose-vk ul > li::before {
+  content: ''; position: absolute; left: 0; top: .7em; width: .5rem; height: .5rem;
+  border-radius: 2px; background: var(--volt); transform: rotate(45deg);
+}
+.prose-vk a { color: #047857; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.prose-vk strong { color: var(--ink); }
+.prose-vk table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.prose-vk th, .prose-vk td { padding: .65rem .75rem; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.prose-vk th { background: var(--ink); color: #fff; font-weight: 600; }
+
+/* Product page image zoom */
+.zoom-wrap img { transition: transform .25s ease; }
+@media (hover: hover) {
+  .zoom-wrap:hover img { transform: scale(1.8); }
+}
+
+/* Product page: the sticky buy bar replaces the floating WhatsApp button on phones */
+@media (max-width: 1023px) {
+  [data-page="product"] .wa-float { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}

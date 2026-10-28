@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop Jerseys & Sportswear — VK Sports</title>
+  <meta name="description" content="Browse VK Sports jerseys and training wear. Filter by sport, size, price, fabric and colour, then order on WhatsApp.">
+  <meta name="theme-color" content="#07111B">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VK Sports">
+  <meta property="og:title" content="Shop Jerseys & Sportswear — VK Sports">
+  <meta property="og:description" content="Browse VK Sports jerseys and training wear. Filter by sport, size, price, fabric and colour, then order on WhatsApp.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/js/tw-config.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="font-sans text-ink antialiased" data-page="shop">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="relative overflow-hidden bg-ink text-white">
+      <img src="assets/img/hero-athletes.webp" alt="" class="absolute inset-0 h-full w-full object-cover object-right opacity-30">
+      <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-transparent"></div>
+      <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14">
+        <nav class="text-sm text-slate-400" aria-label="Breadcrumb"><a href="index.html" class="hover:text-volt">Home</a> <span class="mx-1">/</span> <span class="text-white">Shop</span></nav>
+        <h1 class="mt-2 font-display text-5xl font-black uppercase italic tracking-tight md:text-6xl" data-shop-title>All Products</h1>
+        <p class="mt-1 text-slate-300">Pick your kit, choose a size, and order straight on WhatsApp.</p>
+      </div>
+    </section>
+
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:py-10">
+      <!-- Toolbar -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold lg:hidden" data-filters-open>
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filters <span class="hidden rounded-full bg-volt px-1.5 text-xs text-ink" data-filter-count></span>
+        </button>
+        <div class="no-scrollbar flex flex-1 gap-2 overflow-x-auto" data-active-chips></div>
+        <p class="text-sm text-slate-500" data-result-count></p>
+        <label class="flex items-center gap-2 text-sm">
+          <span class="hidden text-slate-500 sm:inline">Sort</span>
+          <select class="h-10 rounded-xl border border-slate-200 bg-white px-3 font-medium focus:outline-none focus:ring-2 focus:ring-volt" data-sort aria-label="Sort products">
+            <option value="popular">Most popular</option>
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+            <option value="discount">Biggest discount</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="mt-6 grid gap-8 lg:grid-cols-[260px_1fr]">
+        <!-- Filters: sidebar on desktop, drawer on mobile -->
+        <div class="fixed inset-0 z-50 hidden lg:static lg:z-auto lg:block" data-filters>
+          <div class="absolute inset-0 bg-black/60 lg:hidden" data-filters-close></div>
+          <aside class="absolute inset-y-0 left-0 flex w-80 max-w-[88vw] flex-col bg-white lg:static lg:w-auto lg:max-w-none lg:bg-transparent" aria-label="Filters">
+            <div class="flex items-center justify-between border-b px-5 py-4 lg:hidden">
+              <h2 class="font-display text-2xl font-extrabold uppercase italic">Filters</h2>
+              <button class="rounded-lg p-2 hover:bg-slate-100" data-filters-close aria-label="Close filters">
+                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <form class="flex-1 space-y-7 overflow-y-auto px-5 py-5 lg:sticky lg:top-36 lg:max-h-[calc(100vh-10rem)] lg:px-0 lg:py-0" data-filter-form></form>
+            <div class="flex gap-3 border-t p-4 lg:hidden">
+              <button class="flex-1 rounded-xl border border-slate-200 py-3 font-semibold" data-filters-reset>Reset</button>
+              <button class="flex-1 rounded-xl bg-ink py-3 font-semibold text-white" data-filters-close>Show results</button>
+            </div>
+          </aside>
+        </div>
+
+        <section aria-label="Products">
+          <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3" data-grid></div>
+          <div class="hidden rounded-2xl bg-white p-10 text-center ring-1 ring-black/5" data-empty>
+            <p class="font-display text-3xl font-extrabold uppercase italic">No matches</p>
+            <p class="mt-1 text-slate-500">Try removing a filter — or ask us on WhatsApp, we may have it in stock.</p>
+            <div class="mt-5 flex flex-wrap justify-center gap-3">
+              <button class="rounded-xl bg-ink px-5 py-3 text-sm font-bold text-white" data-filters-reset>Clear all filters</button>
+              <a data-wa="Hi VK Sports! I'm looking for something I couldn't find on your site." target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-bold text-white"><span data-icon="whatsapp" data-size="h-4 w-4"></span> Ask on WhatsApp</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/shop.js"></script>
+</body>
+</html>
